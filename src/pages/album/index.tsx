@@ -3,5 +3,5 @@ export default function Album() {
     <div>
       <h1>Welcome to the album page</h1>
     </div>
-  )
+  );
 }

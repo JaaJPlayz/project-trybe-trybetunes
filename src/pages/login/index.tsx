@@ -1,7 +1,7 @@
-import { useState } from "react"
-import { createUser } from "../../services/userAPI";
-import { useNavigate } from "react-router-dom";
-import Loading from "../../components/loading";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { createUser } from '../../services/userAPI';
+import Loading from '../../components/loading';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -12,16 +12,15 @@ export default function Login() {
   const verify = (name: string) => {
     if (name.length > 2) {
       setDisableButton(false);
-    }
-    else {
+    } else {
       setDisableButton(true);
     }
-  }
+  };
 
   const handleNameChange = (event: any) => {
     setNameValue(event.target.value);
     verify(event.target.value);
-  }
+  };
 
   const callCreateUser = async () => {
     setLoading(true);
@@ -32,25 +31,29 @@ export default function Login() {
       console.log(err.message);
     }
     setLoading(false);
-  }
+  };
 
   return (
     <div>
-      {loading === true ? <Loading /> : (<form>
-        <label>
-          Nome:
-          <input
-            data-testid="login-name-input"
-            value={nameValue}
-            onChange={(event) => { handleNameChange(event) }}
-          />
-        </label>
-        <button
-          data-testid="login-submit-button"
-          disabled={disableButton}
-          onClick={() => callCreateUser()}
-        >Entrar</button>
-      </form>)}
+      {loading === true ? <Loading /> : (
+        <form>
+          <label>
+            Nome:
+            <input
+              data-testid="login-name-input"
+              value={ nameValue }
+              onChange={ (event) => { handleNameChange(event); } }
+            />
+          </label>
+          <button
+            data-testid="login-submit-button"
+            disabled={ disableButton }
+            onClick={ () => callCreateUser() }
+          >
+            Entrar
+          </button>
+        </form>
+      )}
     </div>
-  )
+  );
 }
