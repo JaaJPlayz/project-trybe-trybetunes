@@ -1,8 +1,28 @@
 import { useState } from 'react';
+import { addSong, removeSong } from '../../services/favoriteSongsAPI';
 
 export default function MusicCard(musicInfo: any) {
   const { music } = musicInfo;
-  const [favorited, setFavourited] = useState(false);
+  const [favorited, setFavorited] = useState(false);
+
+  const toggleFavorited = (item: any) => {
+    if (favorited) {
+      setFavorited(false);
+      removeSong({
+        trackId: item.trackId,
+        trackName: item.trackName,
+        previewUrl: item.previewUrl,
+      });
+    } else {
+      setFavorited(true);
+      addSong({
+        trackId: item.trackId,
+        trackName: item.trackName,
+        previewUrl: item.previewUrl,
+      });
+    }
+  };
+
   return (
     <div>
       <h1>{music.trackName}</h1>
@@ -16,7 +36,11 @@ export default function MusicCard(musicInfo: any) {
       <label
         data-testid={ `checkbox-music-${music.trackId}` }
       >
-        <input type="checkbox" onChange={ () => setFavourited(!favorited) } />
+        <input
+          type="checkbox"
+          onChange={ () => setFavorited(!favorited) }
+          onClick={ () => { toggleFavorited(music); } }
+        />
         {favorited ? (
           <img src="/src/images/checked_heart.png" alt="favorite" />
         ) : (
